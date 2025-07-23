@@ -3,6 +3,9 @@ Sebagai salah satu syarat untuk memperoleh Gelar Sarjana Komputer Jurusan Ilmu K
 
 Proyek ini menggunakan algoritma deep learning yaitu Convolutional Neural Network (CNN) dengan arsitektur MobileNetV2 untuk mendeteksi tingkat kematangan buah jambu berdasarkan warna dan tekstur citra.
 
+# Halaman Navigasi 
+- Beranda (index), Deteksi, dan Tentang
+  
 # Fitur
 - Deteksi 4 kelas: Mentah, Setengah Matang, Matang, Busuk
 - Akurasi tinggi hingga 99.5%

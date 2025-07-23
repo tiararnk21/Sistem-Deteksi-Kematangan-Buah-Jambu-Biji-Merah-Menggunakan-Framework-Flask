@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Kematangan Buah Jambu - Deteksi</title>
+    <style>
+        /* Global Style */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #FFFFEB;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 2%;
+            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+            margin-left: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: black;
+            background-color: #d3d3d3;
+        }
+
+        nav .active {
+            background-color: #333;
+            color: white;
+        }
+
+        nav {
+    background-color: #FFFFEB;
+    width: 100%;
+    padding: 15px 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: black;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.nav-right a:hover {
+    background-color: #d3d3d3;
+}
+
+.nav-right .active {
+    background-color: #333;
+    color: white;
+}
+
+        /* Main Content Container */
+        .content-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+
+        .upload-button {
+            background-color: #7CB342;
+            color: black;
+            padding: 15px 30px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .upload-button:hover {
+            background-color: #7CB342;
+        }
+
+        /* Area Pratinjau Gambar */
+        #preview-container {
+            margin-top: 30px;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .preview-flex {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        #preview-image {
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .result-info {
+            max-width: 300px;
+            text-align: left;
+        }
+
+        .detect-button {
+            background-color: #7CB342;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .detect-button:hover {
+            background-color: #689F38;
+        }
+
+        #result-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #description-text {
+            font-size: 16px;
+            color: #444;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-left">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <span class="nav-title">Deteksi Kematangan Buah Jambu Biji Merah</span>
+    </div>
+    <div class="nav-right">
+        <a href="/">Beranda</a>
+        <a href="/deteksi" class="active">Deteksi</a>
+        <a href="/tentang">Tentang</a>
+    </div>
+</nav>
+
+    <div class="content-container">
+        <h1>Upload Gambar Jambu</h1>
+        <p>Pilih gambar buah jambu untuk dideteksi tingkat kematangannya.</p>
+        <input type="file" id="upload-image" accept="image/*" style="display: none;">
+        <label for="upload-image" class="upload-button">Pilih Gambar</label>
+
+        <div id="preview-container">
+            <h2>Pratinjau Deteksi</h2>
+            <div class="preview-flex">
+                <img id="preview-image" src="#" alt="Pratinjau Gambar">
+                <div class="result-info">
+                    <button class="detect-button" onclick="detectMaturity()">Deteksi Kematangan</button>
+                    <p id="result-text"></p>
+                    <p id="description-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadImage = document.getElementById('upload-image');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const resultText = document.getElementById('result-text');
+        const descriptionText = document.getElementById('description-text');
+
+        uploadImage.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                previewContainer.style.display = 'block';
+                reader.onload = function (event) {
+                    previewImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.display = 'none';
+                previewImage.src = '#';
+            }
+            resultText.textContent = '';
+            descriptionText.textContent = '';
+        });
+
+        window.detectMaturity = function () {
+            const file = uploadImage.files[0];
+            if (!file) {
+                resultText.textContent = 'Silakan pilih gambar terlebih dahulu.';
+                descriptionText.textContent = '';
+                return;
+            }
+
+            resultText.textContent = 'Menganalisis gambar...';
+            descriptionText.textContent = '';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/deteksi', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Gagal memproses gambar.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.hasil) {
+                        resultText.textContent = `Hasil Deteksi: ${data.hasil} (Confidence: ${(data.confidence * 100).toFixed(2)}%)`;
+                        descriptionText.textContent = `Keterangan: ${data.deskripsi}`;
+                    } else if (data.error) {
+                        resultText.textContent = `Error: ${data.error}`;
+                        descriptionText.textContent = '';
+                    } else {
+                        resultText.textContent = 'Hasil tidak diketahui.';
+                        descriptionText.textContent = '';
+                    }
+                })
+                .catch(error => {
+                    resultText.textContent = `Terjadi kesalahan: ${error.message}`;
+                    descriptionText.textContent = '';
+                });
+        };
+    </script>
+
+</body>
+</html>

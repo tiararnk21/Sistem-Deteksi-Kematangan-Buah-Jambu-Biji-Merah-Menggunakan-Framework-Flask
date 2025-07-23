@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Kematangan Buah Jambu Biji - Tentang</title>
+    <style>
+        /* Global Style */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #FFFFEB;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 2%;
+            z-index: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+            margin-left: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: black;
+            background-color: #d3d3d3;
+        }
+
+        nav .active {
+            background-color: #333;
+            color: white;
+        }
+
+         nav {
+    background-color: #FFFFEB;
+    width: 100%;
+    padding: 15px 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: black;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.nav-right a:hover {
+    background-color: #d3d3d3;
+}
+
+.nav-right .active {
+    background-color: #333;
+    color: white;
+}
+
+        /* Main Content Container */
+        .content-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+            width: 80%;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .about-section {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .about-text blockquote {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 5px solid #7CB342;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        .about-text p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+            <div class="nav-left">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <span class="nav-title">Deteksi Kematangan Buah Jambu Biji Merah</span>
+    </div>
+    <div class="nav-right">
+        <a href="/">Beranda</a>
+        <a href="/deteksi">Deteksi</a>
+        <a href="/tentang" class="active">Tentang</a>
+    </nav>
+
+    <div class="content-container">
+        <h1>Tentang</h1>
+        <div class="about-section">
+            <div class="about-image">
+                <img src="{{ url_for('static', filename='images/kebun.jpg') }}" alt="Kebun Jambu">
+            </div>
+            <div class="about-text">
+                <blockquote>
+                    Proyek ini berawal dari penelitian di Desa Tegal, Kecamatan Kemang, Kabupaten Bogor, di mana kami menemukan bahwa penilaian kematangan buah jambu biji merah masih dilakukan secara manual dan kurang konsisten. Untuk itu, kami mengembangkan sistem deteksi otomatis menggunakan pengolahan citra dan CNN (Convolutional Neural Network).
+                </blockquote>
+                <p>
+                    Melalui website ini, siapa saja kini dapat mengunggah gambar jambu biji merah dan mengetahui tingkat kematangannya secara cepat dan akurat.
+                </p>
+                </div>
+        </div>
+    </div>
+
+</body>
+</html>
